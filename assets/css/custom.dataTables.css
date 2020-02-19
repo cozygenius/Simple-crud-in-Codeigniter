@@ -1,0 +1,11 @@
+.pagination > li.active > a {
+    background-color: #605ca8 !important;
+    border-color: #605ca8 !important;
+}
+.dataTables_filter > label > input[type='search']:focus{
+    border-color: #605ca8 !important;
+}
+
+.dataTables_length > label > select:focus{
+    border-color: #605ca8 !important;
+}
