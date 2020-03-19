@@ -72,26 +72,65 @@ class User extends CI_controller
 
 	}
 	
-	function edit($userId)
+	function edit()
 	{
-		$this->load->model('User_model');
-		$user = $this->User_model->getUser($userId);
-		$data = array();
-		$data['user'] = $user;
 
-		 $this->form_validation->set_rules('name','Name','required');
-    	if($this->form_validation->run()==false)
-    	{
-    	 	$this->load->view('edit',$data);
-    	}   
-    	 else
-    	 {
-    	 	$formArray= array();
-    	 	$formArray['name']=$this->input->post('name');
-    	 	$this->User_model->updateUser($userId,$formArray);
-    	 	$this->session->set_flashdata('success','records updated');
-    	 	redirect(base_url().'index.php/user/index');
-    	 }	
+
+      
+              $id=$_REQUEST['sid'];
+              $name=$_REQUEST['sname'];
+             
+
+            // $val=$_REQUEST['sval'];
+
+		// $this->load->model('User_model');
+		// $user = $this->User_model->getUser($userId);
+		// $data = array();
+		// $data['user'] = $user;
+
+		//  $this->form_validation->set_rules('name','Name','required');
+  //   	if($this->form_validation->run()==false)
+  //   	{
+    	 //	$this->load->view('edit');
+    	// }   
+    	//  else
+    	//  {
+    	//  	$formArray= array();
+    	//  	$formArray['name']=$this->input->post('name');
+    	//  	$this->User_model->updateUser($userId,$formArray);
+    	//  	$this->session->set_flashdata('success','records updated');
+    	//  	redirect(base_url().'index.php/user/index');
+    	//  }	
+          $this->load->model('User_model');
+           $getus=$this->User_model->getUser($id);  
+          $user= $this->User_model->viewUser(); 
+         //$user=$this->User_model->User($id);
+
+         //  $us=array();
+         // $us['user']=$getus;
+            $array = json_decode(json_encode($getus), true);
+           $data=array();
+           $data['user']=$user;
+           $data['name']=$name;
+           $data['array']=$array;
+
+
+
+         
+    
+                $this->load->view('edit',$data);
+
+                  echo "<pre>";
+             
+             // print_r($array);
+               //  print count($array);
+
+                   // print_r($name);
+                  //    print_r($data);
+                 
+                echo "</pre>";
+
+                 
 	}
 	function delete($userId)
 	{

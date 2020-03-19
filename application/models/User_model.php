@@ -22,30 +22,40 @@ class User_model extends CI_model{
                return compact('data');
      }
      function getUser($userId){
-         $this->db->where('id',$userId);
-         return $user = $this->db->get('user')->row_array();
+         $this->db->select('faculty.subject,user.name');
+          $this->db->where('id',$userId);
+            $this->db->from('faculty');
+            $this->db->join('user', 'user.id = faculty.f_id');
+            $getus=$this->db->get();
+              if($getus->num_rows()>0)
+        {
+            return $getus->result();
+        }
+               // return compact('data');
+       //  $this->db->where('id',$userId);
+         //return $user = $this->db->get('user')->row_array();
 
      }
      function updatestatus(){
-        $id=$_REQUEST['sid'];
-        $val=$_REQUEST['sval'];
+        // $id=$_REQUEST['sid'];
+        // $val=$_REQUEST['sval'];
         // $data=array('id'=>$id,'status'=>$val);
         // echo "<pre>";
         // print_r($data);
-        if($val == 1){
-            $status = 0;
+        // if($val == 1){
+        //     $status = 0;
 
-        }
-        else{
-            $status = 1;
-        }
-        $data=array('status'=>$status);
+        // }
+        // else{
+        //     $status = 1;
+        // }
+        // $data=array('status'=>$status);
         // echo "<pre>";
         //  print_r($data);
 
         // $this->db->where('user_id',$id);
         // $this->db->update('faculty', $data); //Update status here
-          redirect(base_url().'index.php/user/index');
+          // redirect(base_url().'index.php/user/index');
 
      }
      function updateUser($userId,$formArray){
@@ -57,6 +67,31 @@ class User_model extends CI_model{
      	$this->db->where('id',$userId);
      	$this->db->delete('user');
      }
+
+  function dispUser(){
+    $this->db->distinct();
+
+     $this->db->select('faculty.subject,user.name');
+            $this->db->from('faculty');
+            $this->db->join('user', 'user.id = faculty.f_id');
+            $data=$this->db->get()->result();
+               return compact('data');
+        // $data=$this->db->get('faculty');
+        // if($data->num_rows()>0)
+        // {
+        //     return $data->result();
+        // }
+    }
+
+     function User($userId){
+        $this->db->select('*');
+        $this->db->where('id',$userId);
+        $data=$this->db->get('user');
+        if($data->num_rows()>0)
+        {
+            return $data->result();
+        }
+    }
 
 
     function viewUser(){

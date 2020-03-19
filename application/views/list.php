@@ -5,7 +5,7 @@
 	 <!-- datatable -->
 
 	 	
- 	<!-- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+ 		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url().'assets/DataTables-1.10.20/css/jquery.dataTables.css';?>"/> 
       
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url().'assets/css/bootstrap.min.css'; ?>">
@@ -21,8 +21,8 @@
 
 	
 <body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url().'assets/DataTables-1.10.20/js/jquery.dataTables.js';?>"></script>
 
 		<style>
@@ -35,6 +35,11 @@
 				font-size: 18px;
 
 			}
+			#edit{
+	         color: blue;
+	         font-size: 18px;
+	
+            }
 
 			.fade-in {
   animation: fadeIn ease 2s;
@@ -87,10 +92,6 @@
     opacity:1;
 }
 
-.table-danger{
-	background-color: red
-}
-
 			
 
 	</style>
@@ -130,7 +131,7 @@
 			
 	<!-- <form method="post" action="<?php echo base_url().'index.php/user/updatestatus/'; ?>" >					 -->
 	
-						<table id="data" class="table table-striped" >
+						<table id="data" class="table table-striped " >
 							
 <thead>
 
@@ -138,10 +139,11 @@
 								<!-- <th>User_ID</th>
 								<th>F_id</th> -->
 								<th>Subject</th>
-							<!-- 	<th>Created At</th> -->
+								<th>Created At</th>
 							    <th>status</th>
 							    <!-- <th>Id</th> -->
 							     <th>Name</th>
+							     <th>Edit</th>
 								<th>Action</th>
 							<!-- 	<th>Delete</th> -->
 								
@@ -166,6 +168,7 @@
 	<script type="text/javascript">
 
 			$(document).ready(function(){
+				
 				 var site_url_ = '<?php echo site_url() ?>';
 		    $('#data').DataTable({
 
@@ -188,32 +191,54 @@
                                     } else {
                                         html += `<a href="updatestatus?sid=${data.user_id}&sval=${data.status}" id="undo" class="fas fa-undo" ></a>`;
                                     }
-                                    return html;
-                                
-                                
-                           
-                            
+                                    return html;  
        				     }
        
-        } ],
+        },
+         {
+                                "render": function (data, type, row) {
+                                    let html = "";
+                                    console.log("data", data);
+                                 
+                                        html = `<a  href="edit?sid=${data.f_id}&sname=${data.name}" id="edit" class="fas fa-user-edit"></a>`;
+
+                                    return html;
+                                },
+                                "orderable": true,
+
+                                "targets": 4
+                            },
+
+
+
+
+
+
+         ],
+
       
 		    	 "columns": [
 	            // { "data": "user_id" },
 	            //  { "data": "f_id" },
 	            { "data": "subject"}, 
-               // { "data": "created_at"},
+                { "data": "created_at"},
                 { "data": "status"},
                // { "data": "id"},
                 { "data": "name"},
+                { "data": null},
                 { "data": null }
        
         ],
          "rowCallback":
 
-                            function (nRow, data, iDisplayindex) {
+                            function (nRow, data,) {
+                                if (data.status == '1') {
 
-                                if (data.status == 1) {
-                                    $('tr', nRow).addClass('table-danger');
+                                	
+                                    //$('tr', nRow).addClass('table-danger');
+                                    $('td', nRow).css("background-color","red");
+                                     $('td', nRow).css("color","white");
+
                                 }
                             }
         
@@ -238,9 +263,10 @@ $(document).on('click','.user_status',function(){
 <script>
 $(document).ready(function(){
  
-    $("#div").hide(8000);
+    $("#div").fadeOut(7000);
   });
 </script>
+
 
 
 

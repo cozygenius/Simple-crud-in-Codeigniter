@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="container">
         <nav class="navbar navbar-dark bg-dark">
             <a href="" class="navbar-brand">Assign subject to faculty</a>
         </nav>
